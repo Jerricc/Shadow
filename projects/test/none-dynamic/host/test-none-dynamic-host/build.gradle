@@ -43,7 +43,8 @@ dependencies {
     implementation 'org.slf4j:slf4j-api:1.7.25'
 
     implementation 'com.tencent.shadow.core:common'
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation Deps.kotlin_stdlib_jdk7
+//    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.tencent.shadow.core:loader'
     implementation 'com.tencent.shadow.core:activity-container'
     implementation project(':custom-view')

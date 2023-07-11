@@ -4,7 +4,7 @@ buildscript {
             maven { url 'https://mirrors.tencent.com/nexus/repository/maven-public/' }
         } else {
             google()
-            jcenter()
+            mavenCentral()
         }
     }
 
@@ -17,6 +17,8 @@ buildscript {
 }
 
 apply plugin: 'com.android.application'
+apply plugin: 'com.sensorsdata.analytics.android'
+apply from: "${rootProject.rootDir}/buildScripts/gradle/sensordata.gradle"
 apply plugin: 'com.tencent.shadow.plugin'
 
 android {
@@ -28,11 +30,12 @@ android {
         targetSdkVersion project.TARGET_SDK_VERSION
         versionCode project.VERSION_CODE
         versionName project.VERSION_NAME
+        multiDexEnabled true
     }
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
             signingConfig signingConfigs.create("release")
@@ -63,6 +66,23 @@ dependencies {
     //Shadow Transform后业务代码会有一部分实际引用runtime中的类
     //如果不以compileOnly方式依赖，会导致其他Transform或者Proguard找不到这些类
     pluginCompileOnly 'com.tencent.shadow.core:runtime'
+    implementation Deps.kotlin_stdlib
+    implementation Deps.kotlin_stdlib_common
+    implementation Deps.kotlin_stdlib_jdk7
+    implementation Deps.kotlin_stdlib_jdk8
+    implementation Deps.kotlin_reflect
+    implementation Deps.kotlin_coroutines_core
+    implementation Deps.kotlin_coroutines_android
+    implementation Deps.appcompat
+    implementation Deps.fragment
+    implementation Deps.core_ktx
+    implementation Deps.activity_ktx
+    implementation Deps.fragment_ktx
+    implementation Deps.lifecycle_livedata_ktx
+    implementation Deps.lifecycle_runtime_ktx
+    implementation Deps.lifecycle_viewmodel_ktx
+    implementation Deps.material
+    implementation Deps.umeng_common
 }
 
 preBuild.dependsOn(":sample-host-lib:jarDebugPackage")

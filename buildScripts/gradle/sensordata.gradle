@@ -1,0 +1,10 @@
+dependencies {
+    implementation(Deps.sensorsdata) {
+//        exclude(group: 'com.sensorsdata.analytics.android', module: 'advert')
+//        exclude(group: 'com.sensorsdata.analytics.android', module: 'autoTrack')
+        exclude(group: 'com.sensorsdata.analytics.android', module: 'encrypt')
+        exclude(group: 'com.sensorsdata.analytics.android', module: 'push')
+        exclude(group: 'com.sensorsdata.analytics.android', module: 'visual')
+        exclude(group: 'com.sensorsdata.analytics.android', module: 'exposure')
+    }
+}

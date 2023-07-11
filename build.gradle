@@ -3,7 +3,7 @@
 //buildscript不能从其他gradle文件中apply，所以这段buildscript脚本存在于多个子构建中。
 //请更新buildscript时同步更新。
 buildscript {
-    ext.kotlin_version = '1.5.31'
+    ext.kotlin_version = '1.8.0'
     ext.build_gradle_version = '7.0.3'
     repositories {
         if (!System.getenv().containsKey("DISABLE_TENCENT_MAVEN_MIRROR")) {
@@ -14,6 +14,7 @@ buildscript {
         }
     }
     dependencies {
+        classpath GradlePlugin.sensorsdata_gradle_plugin
         classpath "com.android.tools.build:gradle:$build_gradle_version"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.tencent.shadow.coding:aar-to-jar-plugin'
