@@ -22,29 +22,74 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.tencent.shadow.sample.plugin.app.lib.base.R;
-import com.tencent.shadow.sample.plugin.app.lib.gallery.MainActivity;
+import com.umeng.commonsdk.UMConfigure;
+import com.umeng.umverify.UMVerifyHelper;
+import com.umeng.umverify.listener.UMPreLoginResultListener;
+import com.umeng.umverify.listener.UMTokenResultListener;
 
 public class SplashActivity extends Activity {
 
     private SplashAnimation mSplashAnimation;
+    private UMTokenResultListener dummyListener = new UMTokenResultListener() {
+        @Override
+        public void onTokenSuccess(String s) {
+            Log.e("SplashActivity","onTokenSuccess"+s);
+        }
 
+        @Override
+        public void onTokenFailed(String s) {
+            Log.e("SplashActivity","onTokenFailed"+s);
+        }
+    };
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_splash);
+        UMConfigure.preInit(this,UMENG_KEY,"channel");
+        UMConfigure.init(
+                this,
+                UMENG_KEY,
+                "BuildConfig.CHANNEL",
+                UMConfigure.DEVICE_TYPE_PHONE,
+                UMENG_MSG_KEY
+        );
+        UMVerifyHelper verify = UMVerifyHelper.getInstance(this, dummyListener);
+        verify.accelerateLoginPage(5000, new UMPreLoginResultListener(){
 
-        mSplashAnimation = new SplashAnimation(this);
-        mSplashAnimation.start();
-
-        mSplashAnimation.setAnimationListener(new ISplashAnimation.AnimationListener() {
             @Override
-            public void onAnimationEnd() {
-                finish();
+            public void onTokenSuccess(String s) {
+                Log.e("SplashActivity","onTokenSuccess"+s);
 
-                startActivity(new Intent(SplashActivity.this, MainActivity.class));
+            }
+
+            @Override
+            public void onTokenFailed(String s, String s1) {
+                Log.e("SplashActivity","onTokenFailed"+s+"---"+s1);
+
             }
         });
+        Log.e("SplashActivity","start");
+
+        verify.setAuthSDKInfo(AUTH_INFO);
+        verify.getLoginToken(this,5000);
+//        mSplashAnimation = new SplashAnimation(this);
+//        mSplashAnimation.start();
+//
+//
+//        mSplashAnimation.setAnimationListener(new ISplashAnimation.AnimationListener() {
+//            @Override
+//            public void onAnimationEnd() {
+//                finish();
+//
+//                startActivity(new Intent(SplashActivity.this, TestUmengActivity.class));
+//            }
+//        });
     }
+    //TODO UMENG更换测试信息
+    String UMENG_KEY = "";
+    String AUTH_INFO = "";
+    String  UMENG_MSG_KEY = "";
 }

@@ -17,9 +17,9 @@ buildscript {
 }
 
 apply plugin: 'com.android.application'
+apply plugin: 'com.tencent.shadow.plugin'
 apply plugin: 'com.sensorsdata.analytics.android'
 apply from: "${rootProject.rootDir}/buildScripts/gradle/sensordata.gradle"
-apply plugin: 'com.tencent.shadow.plugin'
 
 android {
     compileSdkVersion project.COMPILE_SDK_VERSION
@@ -131,7 +131,8 @@ shadow {
                         partKey = 'sample-plugin-app'
                         buildTask = ':sample-app:assemblePluginDebug'
                         apkPath = 'projects/sample/source/sample-plugin/sample-app/build/outputs/apk/plugin/debug/sample-app-plugin-debug.apk'
-                        hostWhiteList = ["com.tencent.shadow.sample.host.lib"]
+                        hostWhiteList = ["com.tencent.shadow.sample.host.lib",
+                                         "com.sensorsdata.analytics.android.**"]
                         dependsOn = ['sample-base']
                     }
                     pluginApk2 {
@@ -147,7 +148,8 @@ shadow {
                         partKey = 'sample-base'
                         buildTask = ':sample-base:assemblePluginDebug'
                         apkPath = 'projects/sample/source/sample-plugin/sample-base/build/outputs/apk/plugin/debug/sample-base-plugin-debug.apk'
-                        hostWhiteList = ["com.tencent.shadow.sample.host.lib"]
+                        hostWhiteList = ["com.tencent.shadow.sample.host.lib",
+                                         "com.sensorsdata.analytics.android.**"]
                     }
                 }
             }

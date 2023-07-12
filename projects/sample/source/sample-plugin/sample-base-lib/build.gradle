@@ -9,8 +9,16 @@ android {
         versionCode project.VERSION_CODE
         versionName project.VERSION_NAME
     }
+    signingConfigs {
+        appSign {
+            //TODO UMENG更换测试信息
+        }
+    }
 
     buildTypes {
+        debug {
+            signingConfig signingConfigs.appSign
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -26,6 +34,19 @@ android {
 }
 
 dependencies {
+    implementation Deps.umeng_uverify
+    implementation Deps.umeng_uverify_main
+    implementation Deps.umeng_asms
+    implementation Deps.umeng_uverify_logger
+    implementation Deps.umeng_uverify_crash
+    implementation Deps.kotlin_stdlib
+    implementation Deps.kotlin_stdlib_common
+    implementation Deps.kotlin_stdlib_jdk7
+    implementation Deps.kotlin_stdlib_jdk8
+    implementation Deps.kotlin_reflect
+    implementation Deps.kotlin_coroutines_core
+    implementation Deps.kotlin_coroutines_android
+    implementation Deps.umeng_common
     implementation project(":slidingmenu")
     implementation project(":pinnedheaderexpandablelistview")
     implementation 'com.android.support:support-annotations:28.0.0'

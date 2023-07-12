@@ -11,8 +11,14 @@ android {
         versionName project.VERSION_NAME
         testInstrumentationRunner "com.tencent.shadow.test.CustomAndroidJUnitRunner"
     }
+    signingConfigs {
+        appSign {
+            //TODO UMENG更换测试信息
+        }
+    }
     buildTypes {
         debug {
+            signingConfig signingConfigs.appSign
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
